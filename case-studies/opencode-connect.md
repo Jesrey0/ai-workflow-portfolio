@@ -2,39 +2,43 @@
 
 ## Problem
 
-After building around Codex, I wanted a second AI execution substrate without
-making the operator depend on one provider or forcing a different runtime into the
-same internal model.
+After building around Codex, I wanted a second way to run coding work so the whole
+workflow did not depend on one runtime.
 
 ## My role
 
-I defined the compatibility boundary, decided which concepts should remain native
-to OpenCode, directed AI-assisted implementation, compared behavior against the
-Codex-based system, and refined the operator workflow around the differences.
+I compared the experience against Codex Connect, questioned where the two systems
+really needed to match, and pushed back when making them look alike started making
+either one less natural to use.
 
-## Core design choices
+ChatGPT and delegated agents handled the technical implementation. My role was to
+keep the work tied to the practical goal: another useful execution option without
+flattening both runtimes into the same generic interface.
+
+## Where the design landed
+
+These choices were worked out through comparison and repeated use:
 
 - Preserve OpenCode's native sessions, message identities, agents, permissions,
   worktrees, and terminal primitives.
-- Keep the shared abstraction at the **operator workflow** level rather than
-  manufacturing fake API parity between runtimes.
-- Project only bounded, safe operational information through the connector.
-- Keep each substrate independently deployable and independently authoritative for
-  its own worker lifecycle.
-- Use the second implementation as a way to test whether the higher-level operating
-  model was truly portable.
+- Keep what is shared at the **operator workflow** level instead of forcing both
+  runtimes to look the same.
+- Expose only the operational information the connector actually needs.
+- Keep each runtime independently deployable and responsible for its own worker
+  lifecycle.
+- Use the second implementation to test whether the overall workflow still made
+  sense on a different runtime.
 
-## What this demonstrates
+## Why it matters
 
-Abstraction judgment, comparative system design, avoiding over-generalization, and
-the ability to adapt a workflow to different native capabilities instead of forcing
-everything through one shape.
+This shows how I compare approaches in practice: if making two systems look alike
+makes the workflow worse, I would rather keep the difference.
 
 ## Verified outcome
 
-The same primary operator can use OpenCode as an independent execution substrate
-while retaining OpenCode's native session, agent, worktree, permission, and
-terminal semantics. I validated the connector with its automated contract and
-runtime tests and by operating real persisted sessions from ChatGPT. Where a
-platform capability differs—for example event-driven continuation—I record that
-as a separate limitation instead of masking it behind a compatibility layer.
+The same primary operator can use OpenCode as a separate execution path while
+retaining OpenCode's native sessions, agents, worktrees, permissions, and terminal
+behavior. I had ChatGPT run the connector's automated contract and
+runtime tests, then I tested real persisted sessions from ChatGPT myself. Where a
+platform capability differs—for example event-driven continuation—I keep it as a
+real limitation instead of hiding it behind a compatibility layer.

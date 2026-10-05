@@ -1,12 +1,17 @@
 # Jesrey Olmedo — AI-Assisted Workflow Builder
 
-I design practical systems around messy operational workflows, then use AI agents
-to help implement, test, review, and iterate on them.
+I work on messy operational workflows and use AI to turn them into simpler,
+repeatable systems.
 
-I am not presenting myself as a traditional software engineer. My strongest work
-is at the workflow and systems level: clarifying requirements, decomposing
-problems, choosing boundaries, directing AI agents, evaluating tradeoffs, and
-verifying that the resulting system actually works.
+I am not a traditional software engineer, and I do not present myself as one. I am
+strongest when I can see how work actually happens, ask the questions that uncover
+the real friction, challenge weak assumptions, and keep redirecting until the
+workflow is simpler and useful.
+
+I rarely begin with a formal technical specification. I start with the operation:
+what people are trying to do, what keeps getting in the way, what should stay
+untouched, and what a better workflow would feel like. AI handles much of the
+technical investigation and implementation while I keep steering the work.
 
 ## Flagship system: 0xOperator
 
@@ -16,13 +21,14 @@ change a configuration, run tests, prepare a release, or investigate a technical
 problem—and carry that workflow through the same operator instead of manually
 shuttling context between chat, terminals, and coding agents.
 
-ChatGPT acts as the primary operator over a persistent host and can delegate
-bounded implementation or review work to multiple AI coding substrates without
-collapsing their authority, lifecycle, or state into one opaque agent loop.
+ChatGPT runs as the primary operator over a persistent host and can hand off coding
+or review work to Codex and OpenCode without mixing up their sessions, permissions,
+or state.
 
 ```mermaid
 flowchart TD
-    J[Human principal] --> O[ChatGPT / 0xOperator]
+    J[Jes: problem, context, constraints, judgment] --> O[ChatGPT / 0xOperator]
+    O -->|checks, proposes, reports| J
     O --> I[Host ingress]
     I --> C[Codex Connect]
     I --> P[OpenCode Connect]
@@ -30,26 +36,29 @@ flowchart TD
     P --> H2[Persistent host + OpenCode workers]
 ```
 
-The interesting part is not any single framework. It is the operating model:
-separating deterministic host actions from delegated cognition, preserving native
-runtime semantics, making recovery explicit, and verifying outcomes at the layer
-that owns them.
+The point is not any single tool. It is how the work is split up: direct host
+actions stay separate from delegated agent work, each runtime is used the way it
+was designed to be used, interrupted work can be recovered, and results are
+checked where they actually run.
 
 Today I use this environment to maintain the system itself: inspecting live
-services, modifying repositories, running deployment/test workflows, recovering
-interrupted work, and comparing different AI execution substrates while keeping
-one human-directed operating model.
+services, directing repository changes, running test and deployment steps,
+recovering interrupted work, and comparing Codex and OpenCode on real tasks.
 
-## What I own vs. what AI implements
+## How I work with AI
 
-For these projects, I own the problem definition, requirements, architecture,
-constraints, workflow design, decomposition, acceptance criteria, tradeoff
-decisions, review direction, and final verification. AI coding agents perform much
-of the low-level implementation under that direction.
+I bring the problem and the context. I ask questions, challenge proposed
+approaches, redirect work when it starts solving the wrong problem, and decide
+whether the result is actually useful in practice.
 
-That distinction is intentional. The capability I am demonstrating is the ability
-to take an operational problem from ambiguity to a working, testable system by
-orchestrating modern AI tools effectively.
+ChatGPT acts as the technical operator. It translates that direction into
+technical steps, coordinates coding agents when useful, and checks the result
+against the live system.
+
+I do not claim to be the engineer manually writing most of that implementation.
+What I am demonstrating is the ability to take a specific operational problem,
+work through it with capable AI tools, and end up with something that works without
+unnecessarily disturbing the broader system around it.
 
 ## Case studies
 
@@ -61,14 +70,15 @@ Repository: https://github.com/Jesrey0/host-ingress
 
 ### [Codex Connect](case-studies/codex-connect.md)
 
-Persistent host control and bounded delegation to the official Codex runtime.
+Persistent host control with coding and review handoffs to the official Codex
+runtime.
 
 Repository: https://github.com/Jesrey0/codex-connect
 
 ### [OpenCode Connect](case-studies/opencode-connect.md)
 
-A second execution substrate designed around OpenCode's own native sessions,
-agents, worktrees, permissions, and lifecycle instead of forcing API parity.
+A second way to run the same workflow using OpenCode, kept true to how OpenCode
+already works instead of forcing it to look like Codex.
 
 Repository: https://github.com/Jesrey0/opencode-connect
 
@@ -81,13 +91,15 @@ operational data remain private.
 ## Working style
 
 - Start from the real workflow, not the tool.
-- Make authority and ownership explicit.
-- Prefer high-level system design over unnecessary low-level reinvention.
-- Give AI agents bounded objectives and concrete acceptance criteria.
-- Treat agent output as a proposal until the owning layer verifies it.
-- Iterate toward simpler, more reliable operating models.
+- Ask what is actually broken before deciding what to build.
+- Challenge assumptions and proposed solutions instead of accepting the first
+  technically valid answer.
+- Keep changes local when a local intervention is enough.
+- Let ChatGPT work out the technical steps and coordinate the coding agents.
+- Verify the result in the environment where it has to work.
+- Prefer a simpler working workflow over a more impressive architecture.
 
 ## Current target roles
 
-Business / Systems Analyst · AI Operations · Workflow Automation · Technical
-Operations · Process Improvement · AI Adoption / Enablement
+AI Operations · Workflow Automation · Technical Operations · Process Improvement ·
+Business / Operations Analysis · AI Adoption / Enablement

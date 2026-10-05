@@ -9,9 +9,15 @@ high level.
 
 ## My role
 
-I map real-world procedures, identify missing records or inconsistent states,
-design repeatable workflows, direct AI assistance for document and data work, and
-verify outputs against the organization's actual operating requirements.
+I start from how the organization actually works: the forms people use, the
+records they rely on, the exceptions they remember, and the places where the
+process has become inconsistent or unnecessarily manual.
+
+I ask questions, reconcile conflicting information, decide what should remain a
+human responsibility, and use AI to help turn the resulting process into cleaner
+documents, checks, registers, and repeatable workflows. The goal is not to replace
+the broader system. It is to improve one part of the operation without creating
+new disruption around it.
 
 ## Examples of the workflow layer
 
@@ -27,11 +33,11 @@ verify outputs against the organization's actual operating requirements.
 No private records, names, financial values, documents, screenshots, source code,
 or organization-specific operating details are published as part of this portfolio.
 
-## What this demonstrates
+## Why it matters
 
-The same systems and orchestration approach can be applied outside software
-infrastructure to real operational work with privacy, governance, and human
-accountability constraints.
+This is the same working style outside software: understand the real process, fix
+the part causing the most rework, and leave human approval and the surrounding
+operation intact.
 
 ## Verified outcome
 

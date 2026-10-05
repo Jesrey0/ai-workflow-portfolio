@@ -2,16 +2,21 @@
 
 ## Problem
 
-I wanted ChatGPT to operate self-hosted AI connectors without exposing raw local
-control planes directly to the internet. A simple tunnel was not enough: identity,
-authorization, routing, state isolation, and failure boundaries had to remain
-explicit.
+I wanted ChatGPT to reach my self-hosted AI connectors without exposing local
+administration services directly to the internet. A simple tunnel was not enough:
+identity, authorization, routing, and failure isolation still had to be clear.
 
 ## My role
 
-I defined the security and operating requirements, chose the major boundaries,
-directed AI agents through implementation and adversarial review, and verified the
-deployed behavior. The low-level implementation was largely AI-assisted.
+My starting constraint was simple: I wanted remote AI tools to reach the services
+they needed without casually exposing the rest of the host or turning the ingress
+layer into another complicated platform to maintain.
+
+As the design evolved, I kept questioning unnecessary cost, duplicated controls,
+and changes that would disturb already-working endpoints. ChatGPT and delegated
+agents worked through the networking, authentication, configuration, and review
+details. I judged the result by whether it stayed narrow, understandable, and safe
+to operate.
 
 ## Design
 
@@ -26,7 +31,7 @@ flowchart LR
     P --> L2[Private loopback service]
 ```
 
-Key choices:
+Where the design landed:
 
 - Centralize the public ingress boundary while keeping each backend independently
   deployable.
@@ -34,21 +39,20 @@ Key choices:
   local control plane.
 - Keep backend listeners private and default-deny undeclared public routes.
 - Keep OAuth state isolated per connector even when the host identity is shared.
-- Treat source, deployment, ingress readiness, and live ChatGPT connectivity as
-  separate verification states.
+- Check source, deployment, gateway readiness, and live ChatGPT connection
+  separately instead of assuming one proves the others.
 
-## What this demonstrates
+## Why it matters
 
-Security-boundary thinking, systems decomposition, authentication flow design,
-failure isolation, and the ability to direct AI implementation around explicit
-operational constraints.
+This is the kind of infrastructure change I prefer: solve the narrow problem, add
+a safer boundary, and leave the surrounding system alone.
 
 ## Verified outcome
 
 The shared ingress currently fronts two independently deployed connector
 backends through separate authenticated resources while their raw application
-control planes remain private. I verified the design through automated gateway
-and OAuth integration tests, Caddy configuration validation, and live connection
-checks from the operator environment. The acceptance process treats source,
-deployment, ingress readiness, and successful client connection as separate
-states rather than assuming one proves the others.
+control planes remain private. I had ChatGPT run the gateway and OAuth integration
+tests and Caddy configuration checks, then I checked live connections from the
+operator side before accepting the change. Source, deployment, gateway readiness,
+and successful client connection are checked separately instead of assuming one
+proves the others.
